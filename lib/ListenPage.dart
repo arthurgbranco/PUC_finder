@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:location/location.dart';
 
 class ListenPage extends StatefulWidget {
@@ -10,7 +11,7 @@ class _ListenPageState extends State<ListenPage> {
 
   Location location = Location();
 
-  late Map<String, double> currentLocation;
+  Map<String, double> currentLocation = new Map();
 
   @override
   void initState() {
@@ -29,6 +30,7 @@ class _ListenPageState extends State<ListenPage> {
       appBar: AppBar(),
       body: Column(
         children: <Widget>[
+          // ignore: unnecessary_null_comparison
           currentLocation == null
               ? CircularProgressIndicator()
               : Text("Location:" + currentLocation["latitude"].toString() + " " + currentLocation["longitude"].toString()),
