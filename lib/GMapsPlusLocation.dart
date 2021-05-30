@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -34,6 +34,7 @@ class MapSampleState extends State<MapSample> {
      location.onLocationChanged.listen((value) {
        print("teste2");
        print(value);
+       showAlertDialog(context, 'teste');
      });
    }
 
@@ -79,6 +80,33 @@ class MapSampleState extends State<MapSample> {
   }
 }
 
+showAlertDialog(BuildContext context, String text) {
+
+  // set up the button
+  Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () {
+            Navigator.of(context).pop();
+          }
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Olá"),
+    content: Text("Bem vindo à PUC Minas unidade " + text),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
 
 
