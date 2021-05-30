@@ -10,25 +10,22 @@ class MapSample extends StatefulWidget {
   State<MapSample> createState() => MapSampleState();
 }
 
+// Google maps controller
 class MapSampleState extends State<MapSample> {
   Completer<GoogleMapController> _controller = Completer();
-
   Location location = Location();
-  
-
-
   static final CameraPosition _unidadePraca = CameraPosition(
     target: LatLng(-43.02528538509029, 147.8511571119575),
     zoom: 14.4746,
   );
-
+   
+   // Google maps configurations
    @override
    void initState() {
+     // Move refresh inverval: 10000 (10 seconds) + accuracy (low)
      location.changeSettings(accuracy: LocationAccuracy.low, interval: 10000);
      super.initState();
      location.onLocationChanged.listen((value) {
-       print("teste2");
-       print(value.latitude);
        sendUserLocation(value.latitude, value.longitude).then((value) => {
         if(value != '' && value != 'false') {
          showAlertDialog(context, value)
@@ -40,6 +37,7 @@ class MapSampleState extends State<MapSample> {
      });
    }
 
+  // Builds google map widget
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -58,6 +56,7 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
+  // Moves camera to Dart Island on startup
   Future<void> _getLocation() async {
     print("Entrou");
     CameraPosition currentLocation;
@@ -85,6 +84,7 @@ showAlertDialog(BuildContext context, String text) {
           }
   );
 
+  // Shows dialog on screen greeting user to nearest PUC Minas
   AlertDialog alert = AlertDialog(
     title: Text("Olá"),
     content: Text("Bem vindo à PUC Minas unidade " + text),
@@ -101,6 +101,7 @@ showAlertDialog(BuildContext context, String text) {
   );
 }
 
+// Call cloud function passing user current coordinates
 Future<String> sendUserLocation(double? latitude, double? longitude) async {
   var client = http.Client();
   final msg = jsonEncode({"coordinates": {
