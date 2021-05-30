@@ -22,12 +22,6 @@ class MapSampleState extends State<MapSample> {
     zoom: 14.4746,
   );
 
-  // static final CameraPosition _kLake = CameraPosition(
-  //     bearing: 192.8334901395799,
-  //     target: LatLng(-19.8157,122.085749655962),
-  //     tilt: 59.440717697143555,
-  //     zoom: 19.151926040649414);
-
    @override
    void initState() {
      location.changeSettings(accuracy: LocationAccuracy.low, interval: 10000);
@@ -36,16 +30,13 @@ class MapSampleState extends State<MapSample> {
        print("teste2");
        print(value.latitude);
        sendUserLocation(value.latitude, value.longitude).then((value) => {
-        // ignore: unrelated_type_equality_checks
-        if(value != '' && value != false) {
+        if(value != '' && value != 'false') {
          showAlertDialog(context, value)
        }
        else {
          print(value)
        }
        });
-       // ignore: unrelated_type_equality_checks
-
      });
    }
 
@@ -67,11 +58,6 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  //  Future<void> _goToTheLake() async {
-  //    final GoogleMapController controller = await _controller.future;
-  //    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  //  }
-
   Future<void> _getLocation() async {
     print("Entrou");
     CameraPosition currentLocation;
@@ -92,8 +78,6 @@ class MapSampleState extends State<MapSample> {
 }
 
 showAlertDialog(BuildContext context, String text) {
-
-  // set up the button
   Widget okButton = FlatButton(
     child: Text("OK"),
     onPressed: () {
@@ -101,7 +85,6 @@ showAlertDialog(BuildContext context, String text) {
           }
   );
 
-  // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     title: Text("Olá"),
     content: Text("Bem vindo à PUC Minas unidade " + text),
@@ -110,7 +93,6 @@ showAlertDialog(BuildContext context, String text) {
     ],
   );
 
-  // show the dialog
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -139,73 +121,3 @@ Future<String> sendUserLocation(double? latitude, double? longitude) async {
     return '';
   }
 }
-
-
-
-// import 'dart:async';
-
-// import 'package:flutter/material.dart';
-// import 'package:location/location.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-
-// class GoogleMapsDemo extends StatefulWidget {
-//   @override
-//   _GoogleMapsDemoState createState() => _GoogleMapsDemoState();
-// }
-
-// class _GoogleMapsDemoState extends State<GoogleMapsDemo> {
-//   GoogleMapController? mapController;
-//   Location location = Location();
-
-//   // ignore: invalid_use_of_visible_for_testing_member
-//   Marker marker = new Marker(markerId: new MarkerId(''));
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     location.onLocationChanged.listen((location) async {
-//       if(marker != null) {
-//         mapController?.removeMarker(marker);
-//       }
-//       marker = (await mapController?.addMarker(MarkerOptions(
-//         position: LatLng(location["latitude"]!, location["longitude"]!),
-//       )))!;
-//       mapController?.moveCamera(
-//         CameraUpdate.newCameraPosition(
-//           CameraPosition(
-//             target: LatLng(
-//               location["latitude"]!,
-//               location["longitude"]!,
-//             ),
-//             zoom: 20.0,
-//           ),
-//         ),
-//       );
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Column(
-//         children: <Widget>[
-//           Container(
-//             height: MediaQuery.of(context).size.height,
-//             width: MediaQuery.of(context).size.width,
-//             child: GoogleMap(
-//               onMapCreated: (GoogleMapController controller) {
-//                 mapController = controller;
-//               }, initialCameraPosition: CameraPosition(
-//             zoom: 20.0, target: LatLng(
-//               0,
-//               0,
-//             ),
-//           ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

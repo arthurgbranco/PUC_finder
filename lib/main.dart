@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-// import './ListenPage.dart';
-// import './GeolocatorListenPage.dart';
 import './GMapsPlusLocation.dart';
 void main() => runApp(MyApp());
 
@@ -48,15 +46,11 @@ class _MyHomePageState extends State<MyHomePage>
         child: new TabBar(
           controller: controller,
           tabs: <Widget>[
-            // new Tab(icon: new Icon(Icons.home)),
-            // new Tab(icon: new Icon(Icons.map)),
             new Tab(icon: new Icon(Icons.gps_fixed)),
           ],
         ),
       ),
       body: new TabBarView(controller: controller, children: <Widget>[
-        // new ListenPage(),
-        // new GeoListenPage(),
         new MapSample(),
       ]),
     );
