@@ -11,13 +11,13 @@ class _ListenPageState extends State<ListenPage> {
 
   Location location = Location();
 
-  Map<String, double> currentLocation = new Map();
+  LocationData? currentLocation;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    location.onLocationChanged().listen((value) {
+    location.onLocationChanged.listen((value) {
       setState(() {
         currentLocation = value;
       });
@@ -33,7 +33,7 @@ class _ListenPageState extends State<ListenPage> {
           // ignore: unnecessary_null_comparison
           currentLocation == null
               ? CircularProgressIndicator()
-              : Text("Location:" + currentLocation["latitude"].toString() + " " + currentLocation["longitude"].toString()),
+              : Text("Location:" + currentLocation!["latitude"].toString() + " " + currentLocation!["longitude"].toString()),
         ],
       ),
     );
