@@ -51,7 +51,7 @@ class _GetLocationPageState extends State<GetLocationPage> {
   Future<Map<String, double>> _getLocation() async {
     var currentLocation = <String, double>{};
     try {
-      currentLocation = await location.getLocation();
+      currentLocation = (await location.getLocation()) as Map<String, double>;
     } catch (e) {
       currentLocation = null;
     }

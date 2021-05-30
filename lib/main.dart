@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './ListenPage.dart';
-import './GeolocatorListenPage.dart';
+// import './ListenPage.dart';
+// import './GeolocatorListenPage.dart';
 import './GMapsPlusLocation.dart';
 void main() => runApp(MyApp());
 
@@ -27,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void initState() {
     super.initState();
-    controller = new TabController(vsync: this, length: 3);
+    controller = new TabController(vsync: this, length: 1);
   }
 
   @override
@@ -48,16 +48,16 @@ class _MyHomePageState extends State<MyHomePage>
         child: new TabBar(
           controller: controller,
           tabs: <Widget>[
-            new Tab(icon: new Icon(Icons.home)),
-            new Tab(icon: new Icon(Icons.map)),
+            // new Tab(icon: new Icon(Icons.home)),
+            // new Tab(icon: new Icon(Icons.map)),
             new Tab(icon: new Icon(Icons.gps_fixed)),
           ],
         ),
       ),
       body: new TabBarView(controller: controller, children: <Widget>[
-        new ListenPage(),
-        new GeoListenPage(),
-        new GoogleMapsDemo(),
+        // new ListenPage(),
+        // new GeoListenPage(),
+        new MapSample(),
       ]),
     );
   }
