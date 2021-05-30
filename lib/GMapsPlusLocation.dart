@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -29,12 +30,22 @@ class MapSampleState extends State<MapSample> {
 
    @override
    void initState() {
-     location.changeSettings(accuracy: LocationAccuracy.low, interval: 5000);
+     location.changeSettings(accuracy: LocationAccuracy.low, interval: 10000);
      super.initState();
      location.onLocationChanged.listen((value) {
        print("teste2");
-       print(value);
-       showAlertDialog(context, 'teste');
+       print(value.latitude);
+       sendUserLocation(value.latitude, value.longitude).then((value) => {
+        // ignore: unrelated_type_equality_checks
+        if(value != '' && value != false) {
+         showAlertDialog(context, value)
+       }
+       else {
+         print(value)
+       }
+       });
+       // ignore: unrelated_type_equality_checks
+
      });
    }
 
@@ -108,6 +119,26 @@ showAlertDialog(BuildContext context, String text) {
   );
 }
 
+Future<String> sendUserLocation(double? latitude, double? longitude) async {
+  var client = http.Client();
+  final msg = jsonEncode({"coordinates": {
+        "latitude": latitude,
+        "longitude": longitude
+      }});
+  try {
+    var uriResponse = await client.post(Uri.parse('https://southamerica-east1-nothingherem8.cloudfunctions.net/amICloseToPuc'),
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: msg,
+    );
+    print(uriResponse.body);
+    return uriResponse.body;
+  } catch(e) {
+    print(e);
+    return '';
+  }
+}
 
 
 
