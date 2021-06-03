@@ -21,17 +21,14 @@ class MapSampleState extends State<MapSample> {
    
    // Google maps configurations
    @override
-   Future<void> initState() async {
+   void initState() {
      // Move refresh inverval: 10000 (10 seconds) + accuracy (low)
      location.changeSettings(accuracy: LocationAccuracy.low, interval: 10000);
      super.initState();
-     final GoogleMapController controller = await _controller.future;
      location.onLocationChanged.listen((value) {
        print("teste2");
        print(value.latitude);
-       CameraPosition currentUpdatedLocation = new CameraPosition(target: LatLng(value.latitude!, value.longitude!), tilt: 59.440717697143555,
-       zoom: 19.151926040649414);
-       controller.animateCamera(CameraUpdate.newCameraPosition(currentUpdatedLocation));
+       _setUserLocationOnMap(value.latitude, value.longitude);
        sendUserLocation(value.latitude, value.longitude).then((value) => {
         if(value != '' && value != 'false') {
          showAlertDialog(context, value)
@@ -57,15 +54,11 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
-  Future<void> _getLocation() async {
+  Future<void> _setUserLocationOnMap(double? latitude, double? longitude) async {
     print("Entrou");
     CameraPosition currentLocation;
-    LocationData currentLatLog;
     final GoogleMapController controller = await _controller.future;
     try {
-       currentLatLog = await location.getLocation();
-       double? latitude = currentLatLog.latitude;
-       double? longitude = currentLatLog.longitude;
        currentLocation = new CameraPosition(target: LatLng(latitude!, longitude!), tilt: 59.440717697143555,
        zoom: 19.151926040649414);
       
