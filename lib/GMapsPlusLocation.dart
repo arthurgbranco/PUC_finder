@@ -23,12 +23,16 @@ class MapSampleState extends State<MapSample> {
   );
 
    @override
-   void initState() {
+   Future<void> initState() async {
      location.changeSettings(accuracy: LocationAccuracy.low, interval: 10000);
      super.initState();
+     final GoogleMapController controller = await _controller.future;
      location.onLocationChanged.listen((value) {
        print("teste2");
        print(value.latitude);
+       CameraPosition currentUpdatedLocation = new CameraPosition(target: LatLng(value.latitude!, value.longitude!), tilt: 59.440717697143555,
+       zoom: 19.151926040649414);
+       controller.animateCamera(CameraUpdate.newCameraPosition(currentUpdatedLocation));
        sendUserLocation(value.latitude, value.longitude).then((value) => {
         if(value != '' && value != 'false') {
          showAlertDialog(context, value)
@@ -50,11 +54,6 @@ class MapSampleState extends State<MapSample> {
           _controller.complete(controller);
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _getLocation,
-        label: Text('To user location!'),
-        icon: Icon(Icons.person),
-      ),
     );
   }
 
@@ -75,6 +74,7 @@ class MapSampleState extends State<MapSample> {
       print(e);
     }
   }
+
 }
 
 showAlertDialog(BuildContext context, String text) {

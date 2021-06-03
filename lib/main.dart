@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Test App"),
+        title: new Text("Maps App"),
         backgroundColor: Colors.teal,
       ),
       bottomNavigationBar: new Material(
